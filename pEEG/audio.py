@@ -1,7 +1,7 @@
 from time import sleep
 
 import numpy as np
-import scipy as sp
+from scipy.fft import fft
 from scipy.integrate import simps
 
 NUM_SAMPLES = 1024
@@ -30,8 +30,8 @@ try:
             try:
                 raw_data  = np.fromstring(stream.read(NUM_SAMPLES), dtype=np.int16)
                 signal = raw_data / 32768.0
-                fft = sp.fft(signal)
-                spectrum = abs(fft)[:int(NUM_SAMPLES/2)]
+                spectrum = fft(signal)
+                spectrum = abs(spectrum)[:int(NUM_SAMPLES/2)]
                 power = spectrum**2
                 bins = simps(np.split(power, NUM_BINS))
                 data['values'] = signal, spectrum, bins
@@ -63,8 +63,8 @@ except ImportError:
             A = 0.4 + 0.05 * np.random.random()
             signal = A * fm_modulation(_t, _f_carrier, _f_mod, _ind_mod)
 
-            fft = sp.fft(signal)
-            spectrum = abs(fft)[:int(NUM_SAMPLES/2)]
+            spectrum = fft(signal)
+            spectrum = abs(spectrum)[:int(NUM_SAMPLES/2)]
             power = spectrum**2
             bins = simps(np.split(power, NUM_BINS))
             data['values'] = signal, spectrum, bins

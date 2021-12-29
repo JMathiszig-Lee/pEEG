@@ -8,6 +8,7 @@ bokeh = "*"
 scipy = "*"
 
 [dev-packages]
+rdm = "*"
 
 [requires]
 python_version = "3.9"
